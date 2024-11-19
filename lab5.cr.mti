@@ -1,0 +1,102 @@
+{C:/Users/madis/Downloads/lab5_top_tb (1).sv} {1 {vlog -work work -sv -stats=none {C:/Users/madis/Downloads/lab5_top_tb (1).sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module lab5_top_tb
+
+Top level modules:
+	lab5_top_tb
+
+} {} {}} C:/Users/madis/Downloads/lab5_autograder_check.sv {1 {vlog -work work -sv -stats=none C:/Users/madis/Downloads/lab5_autograder_check.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module lab5_check_1
+-- Compiling module lab5_check_2
+-- Compiling module lab5_check_3
+-- Compiling module lab5_check_4
+
+Top level modules:
+	lab5_check_1
+	lab5_check_2
+	lab5_check_3
+	lab5_check_4
+
+} {} {}} {C:/Users/madis/Downloads/lab5_top (3).sv} {0 {vlog -work work -sv -stats=none {C:/Users/madis/Downloads/lab5_top (3).sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module lab5_top
+-- Compiling module input_iface
+-- Compiling module vDFF
+-- Compiling module sseg
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(216): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(217): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(218): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(219): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(220): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(221): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(222): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(223): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(224): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(225): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(226): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(227): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(228): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(229): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(230): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(231): (vlog-2110) Illegal reference to net "segs".
+** Error: C:/Users/madis/Downloads/lab5_top (3).sv(232): (vlog-2110) Illegal reference to net "segs".
+
+} {7.0 24.0} {}} {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/datapath.sv} {1 {vlog -work work -sv -stats=none {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/datapath.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module datapath
+
+Top level modules:
+	datapath
+
+} {} {}} {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/alu_tb.sv} {1 {vlog -work work -sv -stats=none {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/alu_tb.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module ALU_tb
+
+Top level modules:
+	ALU_tb
+
+} {} {}} {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/alu.sv} {1 {vlog -work work -sv -stats=none {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/alu.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module ALU
+
+Top level modules:
+	ALU
+
+} {} {}} {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/regfile_tb.sv} {1 {vlog -work work -sv -stats=none {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/regfile_tb.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module tb_regfile
+
+Top level modules:
+	tb_regfile
+
+} {} {}} {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/datapath_tb.sv} {1 {vlog -work work -sv -stats=none {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/datapath_tb.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module datapath_tb
+
+Top level modules:
+	datapath_tb
+
+} {} {}} C:/Users/madis/Downloads/shifter_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/madis/Downloads/shifter_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module shifter_tb
+
+Top level modules:
+	shifter_tb
+
+} {} {}} {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/shifter.sv} {1 {vlog -work work -sv -stats=none {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/shifter.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module shifter
+
+Top level modules:
+	shifter
+
+} {} {}} {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/regfile.sv} {1 {vlog -work work -sv -stats=none {C:/Users/madis/OneDrive/Desktop/CPEN 211/lab5/regfile.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module regfile
+-- Compiling module decode38
+
+Top level modules:
+	regfile
+
+} {} {}}
