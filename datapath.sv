@@ -1,4 +1,4 @@
-module datapath(datapath_in, mdata, sximm8, PC, C, sximm5, vsel, writenum, write, readnum, clk, loada, loadb, shift, asel, bsel, ALUop, loads, loadc, Z_out, datapath_out);
+module datapath(datapath_in, mdata, sximm8, PC, C, sximm5, vsel, writenum, write, readnum, clk, loada, loadb, shift, asel, bsel, ALUop, loads, loadc, status, datapath_out);
   // declare inputs to top-level module
   input [15:0] datapath_in, mdata, sximm8, C, sximm5; // new variables for lab 6: mdata, sximm8, PC, C, sximm5
   input [7:0] PC; 
@@ -12,7 +12,7 @@ module datapath(datapath_in, mdata, sximm8, PC, C, sximm5, vsel, writenum, write
 
   // declare intermidate registers 
   reg [15:0] data_in, data_out, aout, in, sout, Ain, Bin, out;
-  reg Z, N, O; // added negative and overflow flags for Lab 6
+  reg Z, N, V; // added negative and overflow flags for Lab 6
 
   // instantiate regfile
   regfile reg_block(.data_in(data_in), .writenum(writenum), .write(write), 
@@ -20,7 +20,7 @@ module datapath(datapath_in, mdata, sximm8, PC, C, sximm5, vsel, writenum, write
   // instantiate shifter
   shifter shift_block(.in(in), .shift(shift), .sout(sout));
   // instantiate ALU 
-  ALU alu_block(.Ain(Ain), .Bin(Bin), .ALUop(ALUop), .out(out), .Z(Z), .N(N), .O(O)); 
+  ALU alu_block(.Ain(Ain), .Bin(Bin), .ALUop(ALUop), .out(out), .Z(Z), .N(N), .V(V)); 
   
   always_comb begin 
     // assign 0 for Lab 6
@@ -51,7 +51,7 @@ module datapath(datapath_in, mdata, sximm8, PC, C, sximm5, vsel, writenum, write
     if (loads) {  // if loads is selected, the values of Z, N, and O are copied to bits 2, 1, and 0 of status respectively
       status[2] <= Z; 
       status[1] <= N;
-      status[0] <= O;
+      status[0] <= V;
     }
   end 
   
