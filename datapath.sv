@@ -49,9 +49,9 @@ module datapath(datapath_in, mdata, sximm8, PC, C, sximm5, vsel, writenum, write
     if (loadc)   // if loadc is selected, the value of out is copied to datapath_out
       datapath_out <= out; 
     if (loads) {  // if loads is selected, the values of Z, N, and O are copied to bits 2, 1, and 0 of status respectively
-      status[2] <= Z; 
-      status[1] <= N;
-      status[0] <= V;
+      status[2] <= N; 
+      status[1] <= V;
+      status[0] <= Z;
     }
   end 
   
