@@ -8,11 +8,11 @@ module datapath(datapath_in, mdata, sximm8, PC, C, sximm5, vsel, writenum, write
 
   // declare outputs of top-level module 
   output reg [15:0] datapath_out; 
-  output reg Z_out; 
+  output reg [2:0] status; // formerly Z_out 
 
   // declare intermidate registers 
   reg [15:0] data_in, data_out, aout, in, sout, Ain, Bin, out;
-  reg Z; 
+  reg Z, N, O; // added negative and overflow flags for Lab 6
 
   // instantiate regfile
   regfile reg_block(.data_in(data_in), .writenum(writenum), .write(write), 
@@ -20,7 +20,7 @@ module datapath(datapath_in, mdata, sximm8, PC, C, sximm5, vsel, writenum, write
   // instantiate shifter
   shifter shift_block(.in(in), .shift(shift), .sout(sout));
   // instantiate ALU 
-  ALU alu_block(.Ain(Ain), .Bin(Bin), .ALUop(ALUop), .out(out), .Z(Z)); 
+  ALU alu_block(.Ain(Ain), .Bin(Bin), .ALUop(ALUop), .out(out), .Z(Z), .N(N), .O(O)); 
   
   always_comb begin 
     // assign 0 for Lab 6
@@ -48,8 +48,11 @@ module datapath(datapath_in, mdata, sximm8, PC, C, sximm5, vsel, writenum, write
       in <= data_out; 
     if (loadc)   // if loadc is selected, the value of out is copied to datapath_out
       datapath_out <= out; 
-    if (loads)   // if loads is selected, the value of Z is copied to Z_out
-      Z_out <= Z; 
+    if (loads) {  // if loads is selected, the values of Z, N, and O are copied to bits 2, 1, and 0 of status respectively
+      status[2] <= Z; 
+      status[1] <= N;
+      status[0] <= O;
+    }
   end 
   
 endmodule 
