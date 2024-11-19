@@ -1,9 +1,9 @@
-module ALU(Ain,Bin,ALUop,out,Z);
+module ALU(Ain,Bin,ALUop,out,Z,N,O);
   // declarations from Lab 5 outline
   input [15:0] Ain, Bin;
   input [1:0] ALUop;
   output reg [15:0] out;
-  output reg Z, N, O; // zero, neative, and overflow flags
+  output reg Z, N, O; // zero, negative, and overflow flags
 
   always_comb begin 
     case (ALUop) 
