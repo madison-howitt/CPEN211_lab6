@@ -88,11 +88,42 @@ module FSM (clk, reset, s, load, nsel, loada, loadb, asel, bsel, loadc, vsel, wr
       case (state) 
         `S0: begin
           loada = 1; 
-          
-      
-      
-    end 
-  end 
-endmodule 
+          if (s) begin
+            state <= `S1;
+            w <= 0;
+          end
+        end
+        `S1: begin
+          load <= 1;
+          state <= `S2;
+        end
+        `S2: begin
+        loadb <= 1;
+        state <= `S3;
+      end
+      `S3: begin
+        asel <= 1;
+        bsel <= 1;
+        loadc <= 1;
+        state <= `S4;
+      end
+      `S4: begin
+        write <= 1;
+        state <= `S0;
+        w <= 1;
+      end
+      default: state <= `S0;
+    endcase
+  end
+end
 
-  
+endmodule
+
+        
+          
+            
+      
+      
+   
+
+      
