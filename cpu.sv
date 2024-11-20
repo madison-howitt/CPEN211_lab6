@@ -92,58 +92,84 @@ module FSM (clk, reset, s, load, nsel, loada, loadb, asel, bsel, loadc, vsel, wr
     end 
     else begin
       case (state) 
-        `S0: begin
-          loada = 1; 
-          if (s) begin
-            state <= `S1;
-            w <= 0;
-          end
-        end
-        `S1: begin
-          
-          //Decode state where we check the value of opcode
-          if (opcode == 3'b110) begin
-            if (op == 2'b10) begin
-                        state <= S2; // Transition to move instructions for op 10
-              else if (op == 2'b00) 
-                state <= S3; //Transition to move instructions for op 00
-            end
-          end
-          
-          end else if (opcode == 3'b101) begin
-            if (ALUop == 2'b00)
-                        state <= S4; // Transition to ALU instructions for ALUop 00
-            else if (ALUop == 2'b01)
-                      state <= S5; // Transition to ALU instructions for ALUop 01
-                     else if
-                       (ALUop == 2'b10)
-                      state <= S6; // Transition to ALU instructions for ALUop 10
-                          else if 
-                            (ALUop == 2'b11)
-                      state <= S7; // Transition to ALU instructions for ALUop 11
-                          end
-                        end
-                      end
-                   end
+         `S0: begin
+                w <= 1; // Waiting for load and start signals
+                if (load) irout <= in;
+                if (s) begin
+                    state <= `S1; // Transition to Decode state
+                    w <= 0;       // Exit wait state
                 end
-        end
-        `S2: begin
-       
-      end
-      `S3: begin
-        
-      end
-      `S4: begin
-        
-      end
-      default: state <= `S0;
-    endcase
-  end
+            end
+            `S1: begin
+                case (opcode)
+                    3'b110: begin
+                        if (op == 2'b10) state <= `S2; // MOV immediate
+                        else if (op == 2'b00) state <= `S3; // MOV shifted register
+                    end
+                    3'b101: begin
+                        case (ALUop)
+                            2'b00: state <= `S4; // ADD
+                            2'b01: state <= `S5; // CMP
+                            2'b10: state <= `S6; // AND
+                            2'b11: state <= `S7; // MVN
+                        endcase
+                    end
+                    default: state <= `S0; // Undefined opcode returns to wait state
+                endcase
+            end
+            // Add execution states (`S2` to `S7`)
+            `S2: begin // MOV immediate
+                vsel <= 1; // Select immediate value
+                write <= 1; // Enable writing to register
+                nsel <= 3'b010; // Select destination register
+                state <= `S0; // Return to Wait
+            end
+            `S3: begin // MOV shifted register
+                asel <= 1; // Select A input as 0
+                bsel <= 0; // Use shifted value of Rm
+                write <= 1; // Enable write-back
+                nsel <= 3'b010; // Select Rd
+                state <= `S0; // Return to Wait
+            end
+            `S4: begin // ADD
+                loada <= 1; // Load Rn into A
+                state <= `S8;
+            end
+            `S8: begin
+                loadb <= 1; // Load shifted Rm into B
+                state <= `S9;
+            end
+            `S9: begin
+                loadc <= 1; // Compute result in ALU
+                write <= 1; // Write back to Rd
+                nsel <= 3'b010;
+                state <= `S0; // Return to Wait
+            end
+            `S5: begin // CMP
+                loadb <= 1;
+                asel <= 0;
+                bsel <= 0;
+                state <= `S10;
+            end
+            `S10: begin
+                loads <= 1; // Update status flags
+                state <= `S0;
+            end
+            `S6: begin // AND
+                loada <= 1;
+                loadb <= 1;
+                loadc <= 1;
+                state <= `S0;
+            end
+            `S7: begin // MVN
+                loadb <= 1;
+                loadc <= 1;
+                nsel <= 3'b010;
+                state <= `S0;
+            end
+        endcase
+    end
 end
-
-endmodule
-
-        
           
             
       
