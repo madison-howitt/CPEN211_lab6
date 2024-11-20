@@ -5,11 +5,17 @@ module cpu(clk,reset,s,load,in,out,N,V,Z,w);
   output reg Z, N, V, w; // zero, negative and overflow flags // w = 1 if currently in reset state, "wait" 
                                                               // w = 0 otherwise 
 
-  `define S0 3'b000
-  `define S1 3'b001
-  `define S2 3'b010
-  `define S3 3'b011
-  `define S4 3'b100
+  `define S0 4'b0000
+  `define S1 4'b0001
+  `define S2 4'b0010
+  `define S3 4'b0011
+  `define S4 4'b0100
+  `dedine S5 4'b0101
+  `define S6 4'b0110
+  `define S7 4'b0111
+  `define S8 4'b1000
+  `define S9 4'b1001
+  
 
   instruction_decoder instruct_block(.irout(irout), .nsel(nsel), .opcode(opcode), .op(op), .ALUop(ALUop), .sximm5(sximm5), 
                               .sximm8(sximm8), .shift(shift), .readnum(readnum), .writenum(writenum));
@@ -94,23 +100,41 @@ module FSM (clk, reset, s, load, nsel, loada, loadb, asel, bsel, loadc, vsel, wr
           end
         end
         `S1: begin
-          load <= 1;
-          state <= `S2;
+          
+          //Decode state where we check the value of opcode
+          if (opcode == 3'b110) begin
+            if (op == 2'b10) begin
+                        state <= S2; // Transition to move instructions for op 10
+              else if (op == 2'b00) 
+                state <= S3; //Transition to move instructions for op 00
+            end
+          end
+          
+          end else if (opcode == 3'b101) begin
+            if (ALUop == 2'b00)
+                        state <= S4; // Transition to ALU instructions for ALUop 00
+            else if (ALUop == 2'b01)
+                      state <= S5; // Transition to ALU instructions for ALUop 01
+                     else if
+                       (ALUop == 2'b10)
+                      state <= S6; // Transition to ALU instructions for ALUop 10
+                          else if 
+                            (ALUop == 2'b11)
+                      state <= S7; // Transition to ALU instructions for ALUop 11
+                          end
+                        end
+                      end
+                   end
+                end
         end
         `S2: begin
-        loadb <= 1;
-        state <= `S3;
+       
       end
       `S3: begin
-        asel <= 1;
-        bsel <= 1;
-        loadc <= 1;
-        state <= `S4;
+        
       end
       `S4: begin
-        write <= 1;
-        state <= `S0;
-        w <= 1;
+        
       end
       default: state <= `S0;
     endcase
