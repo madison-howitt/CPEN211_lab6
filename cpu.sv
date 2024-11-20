@@ -10,7 +10,7 @@ module cpu(clk,reset,s,load,in,out,N,V,Z,w);
   `define S2 4'b0010
   `define S3 4'b0011
   `define S4 4'b0100
-  `dedine S5 4'b0101
+  `define S5 4'b0101
   `define S6 4'b0110
   `define S7 4'b0111
   `define S8 4'b1000
