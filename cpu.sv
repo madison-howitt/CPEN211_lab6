@@ -45,13 +45,13 @@ module instruction_decoder (irout, nsel, opcode, op, ALUop, sximm5, sximm8, shif
 
     // readnum and writenum outputs to datapath
     case (nsel) // nsel is 3-bit one-hot
-      3'b001: begin // Rm
-        readnum = irout[2:0];
-        writenum = irout[2:0];
-      end
-      3'b010: begin // Rd
+      3'b001: begin // Rd
         readnum = irout[7:5];
         writenum = irout[7:5];
+      end
+      3'b010: begin // Rm
+        readnum = irout[2:0];
+        writenum = irout[2:0];
       end
       3'b100: begin // Rn
         readnum = irout[10:8];
