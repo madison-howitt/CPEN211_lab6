@@ -92,7 +92,7 @@ module FSM (clk, reset, s, load, nsel, loada, loadb, asel, bsel, loadc, vsel, wr
     end 
     else begin
       case (state) 
-         `S0: begin
+        `S0: begin
                 w <= 1; // Waiting for load and start signals
                 if (load) irout <= in;
                 if (s) begin
@@ -100,7 +100,7 @@ module FSM (clk, reset, s, load, nsel, loada, loadb, asel, bsel, loadc, vsel, wr
                     w <= 0;       // Exit wait state
                 end
             end
-            `S1: begin
+            `S1: begin // Decode instruction
                 case (opcode)
                     3'b110: begin
                         if (op == 2'b10) state <= `S2; // MOV immediate
@@ -114,10 +114,9 @@ module FSM (clk, reset, s, load, nsel, loada, loadb, asel, bsel, loadc, vsel, wr
                             2'b11: state <= `S7; // MVN
                         endcase
                     end
-                    default: state <= `S0; // Undefined opcode returns to wait state
+                    default: state <= `S0; // Undefined opcode
                 endcase
             end
-            // Add execution states (`S2` to `S7`)
             `S2: begin // MOV immediate
                 vsel <= 1; // Select immediate value
                 write <= 1; // Enable writing to register
@@ -133,43 +132,46 @@ module FSM (clk, reset, s, load, nsel, loada, loadb, asel, bsel, loadc, vsel, wr
             end
             `S4: begin // ADD
                 loada <= 1; // Load Rn into A
-                state <= `S8;
+                nsel <= 3'b100; // Select Rn
+                state <= `S8; // Proceed to GetB
             end
-            `S8: begin
+            `S8: begin // GetB state for ADD
                 loadb <= 1; // Load shifted Rm into B
-                state <= `S9;
+                nsel <= 3'b001; // Select Rm
+                state <= `S9; // Proceed to Execute
             end
-            `S9: begin
+            `S9: begin // Execute ADD
                 loadc <= 1; // Compute result in ALU
                 write <= 1; // Write back to Rd
-                nsel <= 3'b010;
+                nsel <= 3'b010; // Select Rd
                 state <= `S0; // Return to Wait
             end
             `S5: begin // CMP
-                loadb <= 1;
-                asel <= 0;
-                bsel <= 0;
-                state <= `S10;
+                loada <= 1; // Load Rn into A
+                nsel <= 3'b100; // Select Rn
+                state <= `S10; // Proceed to compare
             end
-            `S10: begin
+            `S10: begin // Execute CMP
+                loadb <= 1; // Load shifted Rm into B
                 loads <= 1; // Update status flags
-                state <= `S0;
+                state <= `S0; // Return to Wait
             end
             `S6: begin // AND
-                loada <= 1;
-                loadb <= 1;
-                loadc <= 1;
-                state <= `S0;
+                loada <= 1; // Load Rn into A
+                nsel <= 3'b100; // Select Rn
+                state <= `S8; // Proceed to GetB
             end
             `S7: begin // MVN
-                loadb <= 1;
-                loadc <= 1;
-                nsel <= 3'b010;
-                state <= `S0;
+                loadb <= 1; // Load shifted Rm into B
+                loadc <= 1; // Compute result in ALU
+                write <= 1; // Write back to Rd
+                nsel <= 3'b010; // Select Rd
+                state <= `S0; // Return to Wait
             end
         endcase
     end
 end
+
           
             
       
